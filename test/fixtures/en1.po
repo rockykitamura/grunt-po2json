@@ -1,0 +1,8 @@
+# My comment
+#. Programmer comment
+#, fuzzy
+#| msgctxt "Old context"
+#| msgid "Won"
+msgctxt "Disambiguation for context"
+msgid "One"
+msgstr "Een"
