@@ -11,14 +11,20 @@
 module.exports = function(grunt) {
 
   grunt.registerMultiTask('po2json', 'Convert PO to JSON files', function() {
-    var options = this.options();
+    var options = this.options({
+        fuzzy: false,
+        stringify: false,
+        pretty: false,
+        format: 'raw',
+        domain: 'messages'
+    });
 
     var path = require('path');
     var po2json = require('po2json');
 
     this.files.forEach(function(line) {
       line.src.forEach(function(file) {
-        var data = po2json.parseFileSync(file);
+        var data = po2json.parseFileSync(file, options);
         var filename = path.basename(file, (path.extname(file)));
         var dest = path.join(line.dest, filename + '.json');
         grunt.file.write(dest, JSON.stringify(data));
