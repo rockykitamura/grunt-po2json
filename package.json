@@ -1,7 +1,7 @@
 {
   "name": "grunt-po2json",
   "description": "Convert PO files to JSON using Grunt.",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "homepage": "https://github.com/rkitamura/grunt-po2json",
   "author": {
     "name": "Rocky Kitamura",

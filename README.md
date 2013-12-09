@@ -25,6 +25,9 @@ In your project's Gruntfile, add a section named `po2json` to the data object pa
 ```js
 grunt.initConfig({
   po2json: {
+    options: {
+        format: 'raw'
+    }
     all: {
       src: ['test/**/*.po'],
       dest: 'some/destination/path/'
@@ -32,6 +35,41 @@ grunt.initConfig({
   },
 })
 ```
+
+### Options
+
+All of the options from [po2json](https://github.com/mikeedwards/po2json)'s `parse` method are exposed through the options object.
+
+#### fuzzy
+Type: `Boolean`
+Default value: `false`
+
+Whether to include fuzzt translation in JSON or not. Should be either `true` or `false`
+
+#### stringify
+Type: `Boolean`
+Default value: `false`
+
+If `true`, returns a JSON string. Otherwise returns a plain Javascript object.
+
+#### pretty
+Type: `Boolean`
+Default value: `false`
+
+If `true`, the resulting JSON string will be pretty-printed. Has no effect when `stringify` is `false`.
+
+#### format
+Type: `String`
+Default value: `raw`
+
+Either `raw` or `jed`. `raw` produces a "raw" JSON output, while `jed` produces an output that is 100% compatible with [Jed](http://slexaxton.github.io/Jed/).
+
+#### domain
+Type: `String`
+Default value: `messages`
+
+The domain the messages will be wrapped inside. Only has effect if `format: 'jed'`.
+
 
 ## Usage
 
