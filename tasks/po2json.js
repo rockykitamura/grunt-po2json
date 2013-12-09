@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 
     this.files.forEach(function(line) {
       line.src.forEach(function(file) {
-        var data = po2json.parseSync(file);
+        var data = po2json.parseFileSync(file);
         var filename = path.basename(file, (path.extname(file)));
         var dest = path.join(line.dest, filename + '.json');
         grunt.file.write(dest, JSON.stringify(data));
