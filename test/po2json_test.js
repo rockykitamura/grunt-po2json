@@ -27,5 +27,12 @@ exports.po2json = {
     var expected = grunt.file.read('test/expected/include_fuzzy/en1.json').trim();
     test.equal(actual, expected, 'include fuzzy entries when requested');
     test.done();
+  },
+  nodeJs: function (test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/dest/nodejs/en2.js');
+    var expected = grunt.file.read('test/expected/nodejs/en2.js').trim();
+    test.equal(actual, expected, 'JSON should be wrapped in Node.js export');
+    test.done();
   }
 };

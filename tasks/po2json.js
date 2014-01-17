@@ -28,7 +28,8 @@ module.exports = function(grunt) {
       line.src.forEach(function(file) {
         var data = po2json.parseFileSync(file, options);
         var filename = path.basename(file, (path.extname(file)));
-        var dest = path.join(line.dest, filename + '.json');
+        var extension = (options.nodeJs || options.requireJs ? 'js' : 'json');
+        var dest = path.join(line.dest, filename + '.' + extension);
 
         var contents = JSON.stringify(data);
         if (options.nodeJs) {

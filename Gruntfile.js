@@ -38,6 +38,11 @@ module.exports = function(grunt) {
         options: { fuzzy: true },
         src: ['test/**/*.po'],
         dest: 'tmp/dest/include_fuzzy/'
+      },
+      nodeJs: {
+        options: { nodeJs: true },
+        src: ['test/**/*.po'],
+        dest: 'tmp/dest/nodejs/'
       }
     },
 
