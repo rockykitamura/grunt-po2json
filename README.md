@@ -70,6 +70,18 @@ Default value: `messages`
 
 The domain the messages will be wrapped inside. Only has effect if `format: 'jed'`.
 
+#### nodeJs
+Type: `Boolean`
+Default value: `false`
+
+Wraps the JSON output in an export definition so it can be imported in Node.js.
+
+#### requireJs
+Type: `Boolean`
+Default value: `false`
+
+Wraps the JSON output in an AMD definition so it can be imported by Require.js.
+
 
 ## Usage
 
