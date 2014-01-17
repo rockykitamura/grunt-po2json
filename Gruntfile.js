@@ -30,10 +30,15 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     po2json: {
-      simple_options: {
+      default_options: {
         src: ['test/**/*.po'],
-        dest: 'tmp/dest/json/'
+        dest: 'tmp/dest/default_options/'
       },
+      include_fuzzy: {
+        options: { fuzzy: true },
+        src: ['test/**/*.po'],
+        dest: 'tmp/dest/include_fuzzy/'
+      }
     },
 
     // Unit tests.

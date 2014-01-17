@@ -2,43 +2,30 @@
 
 var grunt = require('grunt');
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
-
 exports.po2json = {
   setUp: function(done) {
     // setup here if necessary
     done();
   },
+  skipFuzzy: function (test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/dest/default_options/en1.json');
+    var expected = grunt.file.read('test/expected/default_options/en1.json').trim();
+    test.equal(actual, expected, 'should skip fuzzy entries by default');
+    test.done();
+  },
   simple: function (test) {
     test.expect(1);
-    var actual = grunt.file.read('tmp/dest/json/en2.json');
-    var expected = grunt.file.read('test/expected/en2.json');
+    var actual = grunt.file.read('tmp/dest/default_options/en2.json');
+    var expected = grunt.file.read('test/expected/default_options/en2.json').trim();
     test.equal(actual, expected, 'should handle simple .po file');
     test.done();
   },
-  comments: function (test) {
+  includeFuzzy: function (test) {
     test.expect(1);
-    var actual = grunt.file.read('tmp/dest/json/en1.json');
-    var expected = grunt.file.read('test/expected/en1.json');
-    test.equal(actual, expected, 'should handle .po with comments');
+    var actual = grunt.file.read('tmp/dest/include_fuzzy/en1.json');
+    var expected = grunt.file.read('test/expected/include_fuzzy/en1.json').trim();
+    test.equal(actual, expected, 'include fuzzy entries when requested');
     test.done();
   }
 };
