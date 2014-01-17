@@ -16,7 +16,9 @@ module.exports = function(grunt) {
         stringify: false,
         pretty: false,
         format: 'raw',
-        domain: 'messages'
+        domain: 'messages',
+        nodeJs: false,
+        requireJs: false
     });
 
     var path = require('path');
@@ -26,8 +28,19 @@ module.exports = function(grunt) {
       line.src.forEach(function(file) {
         var data = po2json.parseFileSync(file, options);
         var filename = path.basename(file, (path.extname(file)));
-        var dest = path.join(line.dest, filename + '.json');
-        grunt.file.write(dest, JSON.stringify(data));
+        var extension = (options.nodeJs || options.requireJs ? 'js' : 'json');
+        var dest = path.join(line.dest, filename + '.' + extension);
+
+        var contents = JSON.stringify(data);
+        if (options.nodeJs) {
+            contents = "module.exports = " + contents + ";";
+        } else if (options.requireJs) {
+            contents = "define(function() {\n" +
+                       "    return " + contents + ";\n" +
+                       "});\n";
+        }
+
+        grunt.file.write(dest, contents);
         grunt.log.writeln('File "' + dest + '" created.');
       });
     });
