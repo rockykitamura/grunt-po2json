@@ -82,6 +82,22 @@ Default value: `false`
 
 Wraps the JSON output in an AMD definition so it can be imported by Require.js.
 
+#### output_filename
+Type: `Function`
+Default value: `null`
+
+Customize the output filename. Function is passed the source filename and returns an output filename. If no value is returned, default behavior is used.
+
+```json
+  options: {
+    output_filename: function(file) {
+      // only rename en.po. All other files use default behavior.
+      if (/en\.po/.test(file)) {
+        return 'english.json';
+      }
+    }
+  }
+```
 
 ## Usage
 

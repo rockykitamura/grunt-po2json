@@ -43,6 +43,19 @@ module.exports = function(grunt) {
         options: { nodeJs: true },
         src: ['test/**/*.po'],
         dest: 'tmp/dest/nodejs/'
+      },
+      rename_output: {
+        options: {
+          output_filename: function(file) {
+            // only rename en1.po, all other files should use the
+            // default behavior.
+            if (/en1\.po/.test(file)) {
+              return 'the_first_file.json';
+            }
+          }
+        },
+        src: ['test/**/*.po'],
+        dest: 'tmp/dest/rename_output/'
       }
     },
 
