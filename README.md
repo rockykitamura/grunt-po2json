@@ -82,6 +82,51 @@ Default value: `false`
 
 Wraps the JSON output in an AMD definition so it can be imported by Require.js.
 
+#### output_filename
+Type: `Function`
+Default value: `null`
+
+Customize the output filename. Function is passed the source filename and returns an output filename. If no value is returned, default behavior is used.
+
+```json
+  options: {
+    output_filename: function(file) {
+      // only rename en.po. All other files use default behavior.
+      if (/en\.po/.test(file)) {
+        return 'english.json';
+      }
+    }
+  }
+```
+#### output_transform
+Type: `Function`
+Default value: `null`
+
+Customize the output. Function is passed the data that is normally used as output.
+
+```json
+  options: {
+    output_transform: function(data) {
+      var isArray = function(item) {
+        return Object.prototype.toString.call(translation)
+                        === "[object Array]";
+      }
+
+      var transformed = {};
+      for (var msgid in data) {
+        var translation = data[msgid];
+        if (isArray(translation) && translation.length >= 2) {
+          // use the first translation only, no pluralization.
+          translation = translation[1];
+        }
+
+        transformed[msgid] = translation;
+      }
+
+      return transformed;
+    }
+  }
+```
 
 ## Usage
 

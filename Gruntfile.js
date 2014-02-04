@@ -43,6 +43,44 @@ module.exports = function(grunt) {
         options: { nodeJs: true },
         src: ['test/**/*.po'],
         dest: 'tmp/dest/nodejs/'
+      },
+      rename_output: {
+        options: {
+          output_filename: function(file) {
+            // only rename en1.po, all other files should use the
+            // default behavior.
+            if (/en1\.po/.test(file)) {
+              return 'the_first_file.json';
+            }
+          }
+        },
+        src: ['test/**/*.po'],
+        dest: 'tmp/dest/rename_output/'
+      },
+      transform_output: {
+        options: {
+          output_transform: function(data) {
+            var isArray = function(item) {
+              return Object.prototype.toString.call(translation)
+                              === "[object Array]";
+            }
+
+            var transformed = {};
+            for (var msgid in data) {
+              var translation = data[msgid];
+              if (isArray(translation) && translation.length >= 2) {
+                // use the first translation only, no pluralization.
+                translation = translation[1];
+              }
+
+              transformed[msgid] = translation;
+            }
+
+            return transformed;
+          }
+        },
+        src: ['test/**/*.po'],
+        dest: 'tmp/dest/transform_output/'
       }
     },
 
