@@ -46,5 +46,13 @@ exports.po2json = {
     test.equal(actual, expected, 'file renamed');
 
     test.done();
+  },
+  transform_output: function (test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/dest/transform_output/en2.json').trim();
+    var expected = grunt.file.read('test/expected/transform_output/en2.json').trim();
+    test.equal(actual, expected, 'output transformed before write');
+
+    test.done();
   }
 };

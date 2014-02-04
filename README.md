@@ -98,6 +98,35 @@ Customize the output filename. Function is passed the source filename and return
     }
   }
 ```
+#### output_transform
+Type: `Function`
+Default value: `null`
+
+Customize the output. Function is passed the data that is normally used as output.
+
+```json
+  options: {
+    output_transform: function(data) {
+      var isArray = function(item) {
+        return Object.prototype.toString.call(translation)
+                        === "[object Array]";
+      }
+
+      var transformed = {};
+      for (var msgid in data) {
+        var translation = data[msgid];
+        if (isArray(translation) && translation.length >= 2) {
+          // use the first translation only, no pluralization.
+          translation = translation[1];
+        }
+
+        transformed[msgid] = translation;
+      }
+
+      return transformed;
+    }
+  }
+```
 
 ## Usage
 

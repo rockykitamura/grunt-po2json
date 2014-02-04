@@ -19,7 +19,8 @@ module.exports = function(grunt) {
         domain: 'messages',
         nodeJs: false,
         requireJs: false,
-        output_filename: null
+        output_filename: null,
+        output_transform: null
     });
 
     var path = require('path');
@@ -39,6 +40,10 @@ module.exports = function(grunt) {
     }
 
     function getContents(data) {
+      if (typeof options.output_transform === 'function') {
+        data = options.output_transform(data);
+      }
+
       var contents = JSON.stringify(data);
       if (options.nodeJs) {
           contents = "module.exports = " + contents + ";";
