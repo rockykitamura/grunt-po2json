@@ -44,7 +44,7 @@ All of the options from [po2json](https://github.com/mikeedwards/po2json)'s `par
 Type: `Boolean`
 Default value: `false`
 
-Whether to include fuzzt translation in JSON or not. Should be either `true` or `false`
+Whether to include fuzzy translation in JSON or not. Should be either `true` or `false`
 
 #### stringify
 Type: `Boolean`
@@ -82,6 +82,18 @@ Default value: `false`
 
 Wraps the JSON output in an AMD definition so it can be imported by Require.js.
 
+
+#### stringOnly
+Type: `Boolean`
+Default value: `false`
+
+Converts all instances of `"id": [null, "str"]` to `"id": "str"`.
+
+#### singleFile
+Type: `Boolean`
+Default value: `false`
+
+Instead of creating one file for each .po file, writes all .po files to a single file. Property dest will be used as path to the destination file. The right extension will be appended, unless you specify it by yourself.
 
 ## Usage
 
