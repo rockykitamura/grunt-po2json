@@ -25,6 +25,7 @@ module.exports = function(grunt) {
 
     var path = require('path');
     var po2json = require('po2json');
+    var fileCount = 0;
 
     this.files.forEach(function(line) {
       var dest, extension, out = {};
@@ -36,6 +37,7 @@ module.exports = function(grunt) {
           extension = (options.nodeJs || options.requireJs ? 'js' : 'json');
           dest = path.join(line.dest, filename + '.' + extension);
           writeObj(data, dest, options);
+          fileCount++;
         }
         else
           out[filename] = data;
@@ -50,9 +52,11 @@ module.exports = function(grunt) {
         else
           dest = line.dest;
         writeObj(out, dest, options);
+        fileCount++;
       }
     });
 
+    grunt.log.ok(fileCount + ' ' + grunt.util.pluralize(fileCount, 'file/files') + ' created.');
   });
 
   var writeObj = function(data, dest, options) {
@@ -67,7 +71,7 @@ module.exports = function(grunt) {
                   "});\n";
     }
     grunt.file.write(dest, contents);
-    grunt.log.writeln('File "' + dest + '" created.');
+    grunt.verbose.writeln('File "' + dest + '" created.');
   };
 
   var nullArrayToString = function(data) {
