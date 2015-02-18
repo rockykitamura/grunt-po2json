@@ -34,18 +34,19 @@ module.exports = function(grunt) {
         var filename = path.basename(file, (path.extname(file)));
         if (!options.singleFile)
         {
-          extension = (options.nodeJs || options.requireJs ? 'js' : 'json');
+          extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
           dest = path.join(line.dest, filename + '.' + extension);
           writeObj(content, dest, options);
         }
         else
           out[filename] = content;
       });
+
       if (options.singleFile)
       {
         if (!path.extname(line.dest))
         {
-          extension = (options.nodeJs || options.requireJs ? 'js' : 'json');
+          extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
           dest = line.dest + '.' + extension;
         }
         else
