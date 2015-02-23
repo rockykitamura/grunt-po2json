@@ -18,6 +18,7 @@ module.exports = function(grunt) {
       format: 'raw',
       domain: 'messages',
       nodeJs: false,
+      es6: false,
       requireJs: false,
       singleFile: false,
       stringOnly: false
@@ -29,22 +30,23 @@ module.exports = function(grunt) {
     this.files.forEach(function(line) {
       var dest, extension, out = {};
       line.src.forEach(function(file) {
-        var data = po2json.parseFileSync(file, options);
+        var content = po2json.parseFileSync(file, options);
         var filename = path.basename(file, (path.extname(file)));
         if (!options.singleFile)
         {
-          extension = (options.nodeJs || options.requireJs ? 'js' : 'json');
+          extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
           dest = path.join(line.dest, filename + '.' + extension);
-          writeObj(data, dest, options);
+          writeObj(content, dest, options);
         }
         else
-          out[filename] = data;
+          out[filename] = content;
       });
+
       if (options.singleFile)
       {
         if (!path.extname(line.dest))
         {
-          extension = (options.nodeJs || options.requireJs ? 'js' : 'json');
+          extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
           dest = line.dest + '.' + extension;
         }
         else
@@ -65,6 +67,8 @@ module.exports = function(grunt) {
       contents =  "define(function() {\n" +
                   "    return " + contents + ";\n" +
                   "});\n";
+    } else if (options.es6) {
+        contents = "export default " + contents;
     }
     grunt.file.write(dest, contents);
     grunt.log.writeln('File "' + dest + '" created.');
