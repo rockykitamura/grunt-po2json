@@ -27,11 +27,14 @@ module.exports = function(grunt) {
     var path = require('path');
     var po2json = require('po2json');
 
+    // callback function to transform output filename
+    var fileNameTransForm = this.data.fileName || function(fileName) { return fileName};
+
     this.files.forEach(function(line) {
       var dest, extension, out = {};
       line.src.forEach(function(file) {
         var content = po2json.parseFileSync(file, options);
-        var filename = path.basename(file, (path.extname(file)));
+        var filename = fileNameTransForm(path.basename(file, (path.extname(file))));
         if (!options.singleFile)
         {
           extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
