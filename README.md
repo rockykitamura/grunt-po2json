@@ -27,7 +27,7 @@ grunt.initConfig({
   po2json: {
     options: {
         format: 'raw'
-    }
+    },
     all: {
       src: ['test/**/*.po'],
       dest: 'some/destination/path/'
