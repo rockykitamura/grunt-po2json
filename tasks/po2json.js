@@ -26,6 +26,7 @@ module.exports = function(grunt) {
 
     var path = require('path');
     var po2json = require('po2json');
+    var fileCount = 0;
 
     // callback function to transform output filename
     var fileNameTransForm = this.data.fileName || function(fileName) { return fileName};
@@ -40,6 +41,7 @@ module.exports = function(grunt) {
           extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
           dest = path.join(line.dest, filename + '.' + extension);
           writeObj(content, dest, options);
+          fileCount++;
         }
         else
           out[filename] = content;
@@ -55,8 +57,11 @@ module.exports = function(grunt) {
         else
           dest = line.dest;
         writeObj(out, dest, options);
+        fileCount++;
       }
     });
+
+    grunt.log.ok(fileCount + ' ' + grunt.util.pluralize(fileCount, 'file/files') + ' created.');
 
   });
 
@@ -74,7 +79,7 @@ module.exports = function(grunt) {
         contents = "export default " + contents;
     }
     grunt.file.write(dest, contents);
-    grunt.log.writeln('File "' + dest + '" created.');
+    grunt.verbose.writeln('File "' + dest + '" created.');
   };
 
   var nullArrayToString = function(data) {
