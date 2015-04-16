@@ -68,7 +68,7 @@ module.exports = function(grunt) {
   var writeObj = function(data, dest, options) {
     if (options.stringOnly)
       data = nullArrayToString(data);
-    var contents = JSON.stringify(data);
+    var contents = JSON.stringify(data, null, options.pretty ? '   ' : null);
     if (options.nodeJs) {
       contents = "module.exports = " + contents + ";";
     } else if (options.requireJs) {
