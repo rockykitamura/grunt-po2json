@@ -19,6 +19,7 @@ module.exports = function(grunt) {
       domain: 'messages',
       nodeJs: false,
       es6: false,
+      globalVar: '',
       requireJs: false,
       singleFile: false,
       stringOnly: false
@@ -38,7 +39,7 @@ module.exports = function(grunt) {
         var filename = fileNameTransForm(path.basename(file, (path.extname(file))));
         if (!options.singleFile)
         {
-          extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
+          extension = (options.nodeJs || options.requireJs || options.es6 || options.globalVar ? 'js' : 'json');
           dest = path.join(line.dest, filename + '.' + extension);
           writeObj(content, dest, options);
           fileCount++;
@@ -51,7 +52,7 @@ module.exports = function(grunt) {
       {
         if (!path.extname(line.dest))
         {
-          extension = (options.nodeJs || options.requireJs || options.es6 ? 'js' : 'json');
+          extension = (options.nodeJs || options.requireJs || options.es6  || options.globalVar? 'js' : 'json');
           dest = line.dest + '.' + extension;
         }
         else
@@ -77,6 +78,9 @@ module.exports = function(grunt) {
                   "});\n";
     } else if (options.es6) {
         contents = "export default " + contents;
+    }
+    else if (options.globalVar) {
+      contents = ';(function (global) { global.' + options.globalVar + ' = ' + contents + '; }(this));';
     }
     grunt.file.write(dest, contents);
     grunt.verbose.writeln('File "' + dest + '" created.');

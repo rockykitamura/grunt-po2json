@@ -82,6 +82,12 @@ Default value: `false`
 
 Wraps the JSON output in an AMD definition so it can be imported by Require.js.
 
+#### globalVar
+Type: `string`
+Default value: ``
+
+Wraps the JSON output in an immediately-invoked function (IIF) that takes the global `this` and sets a property on it with this option as the key and the output as value.
+
 
 #### stringOnly
 Type: `Boolean`
