@@ -34,5 +34,12 @@ exports.po2json = {
     var expected = grunt.file.read('test/expected/nodejs/en2.js').trim();
     test.equal(actual, expected, 'JSON should be wrapped in Node.js export');
     test.done();
+  },
+  globalVar: function (test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/dest/globalvar/en2.js');
+    var expected = grunt.file.read('test/expected/globalvar/en2.js').trim();
+    test.equal(actual, expected, 'JSON should be wrapped in an IIF that takes `this` and sets a property on it with the content as value');
+    test.done();
   }
 };
